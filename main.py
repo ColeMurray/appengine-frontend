@@ -1,12 +1,13 @@
 import config
 import logging
 from flask import current_app, Flask, render_template, request
+from google.appengine.api import images
+from google.appengine.ext import blobstore
 import urllib2
 import storage
 import base64
 import json
-from google.appengine.api import images
-from google.appengine.ext import blobstore
+
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -18,11 +19,13 @@ def upload_image_file(stream, filename, content_type):
     if not stream:
         return None
 
+
     bucket_filepath = storage.upload_file(
         stream,
         filename,
         content_type
     )
+
 
     logging.info(
         "Uploaded file %s as %s.", filename, bucket_filepath)
@@ -43,8 +46,9 @@ def fetch_predictions(img_stream):
         predictions = json.loads(f.read())
     except urllib2.HTTPError as e:
         logging.exception(e)
-        
+
     logging.info('Predictions: %s', predictions)
+
     return predictions
 
 
