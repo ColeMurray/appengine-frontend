@@ -31,7 +31,10 @@ def upload_file(file_stream, filename, content_type):
     filename = _safe_filename(filename)
     filename = '/' + bucket + '/' + filename
 
-    gcs_file = gcs.open(filename, 'w', content_type=content_type, retry_params=write_retry_params)
+    gcs_file = gcs.open(filename, 'w',
+     content_type=content_type,
+     options={'x-goog-acl' : 'public-read'},
+     retry_params=write_retry_params)
     gcs_file.write(file_stream)
     gcs_file.close()
 
