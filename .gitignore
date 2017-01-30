@@ -1,3 +1,9 @@
 *.pyc
 env/
 lib/
+
+# app engine cloud storage client
+# https://github.com/GoogleCloudPlatform/appengine-gcs-client.git
+appengine-gcs-client/*
+
+media-resources
